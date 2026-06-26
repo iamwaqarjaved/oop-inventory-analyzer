@@ -1,0 +1,4 @@
+cat > requirements.txt << 'EOF'
+# No third-party dependencies.
+# Python >= 3.10 required (uses `match` syntax in type hints).
+EOF

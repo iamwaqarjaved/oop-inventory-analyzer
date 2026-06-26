@@ -1,0 +1,21 @@
+name,sku,category,price,cost,stock,reorder_point,last_sold,expiration_date
+Wireless Mouse,WM-001,Electronics,29.99,12.50,45,10,2026-06-01,
+Mechanical Keyboard,KB-002,Electronics,89.99,38.00,8,15,2026-06-18,
+USB-C Hub,UC-003,Electronics,49.99,19.75,22,10,2026-05-10,
+Running Shoes,RS-004,Footwear,119.99,55.00,60,20,2026-06-20,
+Trail Runners,TR-005,Footwear,139.99,62.00,5,12,2026-03-15,
+Yoga Mat,YM-006,Sports,34.99,14.00,90,25,2026-06-22,
+Resistance Bands,RB-007,Sports,19.99,6.50,120,30,2026-06-10,
+Protein Powder,PP-008,Nutrition,54.99,22.00,15,20,2026-06-15,2026-08-01
+Vitamin C 500mg,VC-009,Nutrition,12.99,4.25,200,50,2026-06-23,2027-03-01
+Expired Supplement,ES-010,Nutrition,9.99,3.00,30,10,2025-12-01,2026-01-15
+Office Chair,OC-011,Furniture,299.99,130.00,12,5,2026-06-05,
+Standing Desk,SD-012,Furniture,599.99,250.00,3,4,2026-02-28,
+Desk Lamp,DL-013,Furniture,45.99,18.00,35,8,2026-06-19,
+Notebook Set,NB-014,Stationery,14.99,5.00,250,50,2026-05-30,
+Ballpoint Pens,BP-015,Stationery,8.99,2.50,180,40,2026-06-01,
+Highlighter Pack,HP-016,Stationery,6.99,2.00,95,30,2026-04-20,
+Backpack,BK-017,Bags,79.99,32.00,18,10,2026-06-12,
+Laptop Sleeve,LS-018,Bags,24.99,9.50,7,10,2026-01-10,
+Water Bottle,WB-019,Sports,22.99,8.00,75,20,2026-06-21,
+Bluetooth Speaker,BS-020,Electronics,59.99,24.00,4,10,2026-06-17,

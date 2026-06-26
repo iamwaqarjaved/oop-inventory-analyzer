@@ -47,7 +47,7 @@ oop-inventory-analyzer/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/oop-inventory-analyzer.git
+git clone https://github.com/iamwaqarjaved/oop-inventory-analyzer.git
 cd oop-inventory-analyzer
 ```
 

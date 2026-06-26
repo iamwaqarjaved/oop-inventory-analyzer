@@ -4,6 +4,10 @@
 > Python's object-oriented features: dataclasses, properties, inheritance,
 > alternate constructors, and the Single Responsibility Principle.
 
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![No dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)
+
 ---
 
 ## What This Project Teaches
@@ -30,6 +34,7 @@ oop-inventory-analyzer/
 │   └── report.py               ← Report formatter (separate from domain logic)
 ├── lab2/
 │   └── inventory_analyzer.py  ← Lab 2 procedural baseline (for comparison)
+├── docs/screenshots/           ← verified output screenshots
 ├── inventory.csv               ← 20-product sample dataset
 ├── main.py                     ← demo / entry point
 └── retrospective.md            ← written comparison: Lab 2 vs Lab 7
@@ -41,7 +46,7 @@ oop-inventory-analyzer/
 
 ### Prerequisites
 
-- Python 3.10 or higher
+- Python 3.9 or higher
 - No third-party packages required
 
 ### 1. Clone the repo
@@ -67,49 +72,55 @@ python main.py
 python main.py path/to/your_inventory.csv
 ```
 
-Expected output (truncated):
-
-```
-Loading inventory from: inventory.csv
-Loaded 20 products in 0.28 ms
-
-── Package feature demos ───────────────────────────────────
-
-  get('KB-002') → Product('KB-002', 'Mechanical Keyboard', stock=8, margin=57.8%)
-    margin_pct        : 57.8%
-    is_below_reorder  : True
-    days_since_sale   : 7
-
-==============================================================
-  INVENTORY ANALYSIS REPORT  (OOP – Lab 7)
-==============================================================
-
-Q1  Total retail inventory value : $36,957.26
-Q2  Products at/below reorder point (6): ...
-```
-
 ### 4. Run the procedural baseline
 
 ```bash
 python lab2/inventory_analyzer.py inventory.csv
 ```
 
-Both versions produce identical answers — that is the point of the lab.
+Both versions produce **identical answers** — that is the point of the lab.
+
+---
+
+## Live Output — OOP Version (Lab 7)
+
+Feature demos and Q1–Q3 running on the real dataset:
+
+![OOP report top half](docs/screenshots/oop_report_top.png)
+
+Q4 category summary, Q5 slow movers, Q6 overstock, and expired perishable alert:
+
+![OOP report bottom half](docs/screenshots/oop_report_bottom.png)
+
+---
+
+## Live Output — Procedural Version (Lab 2)
+
+Same six business questions, same numbers, one file, no classes:
+
+![Lab 2 procedural report](docs/screenshots/lab2_report.png)
+
+---
+
+## Test Suite — All Passing
+
+Cross-version agreement check, 8 domain assertions, mutation tests (add/remove),
+and 1k-row benchmark completing in **5.4 ms**:
+
+![All tests passing](docs/screenshots/all_tests_passing.png)
 
 ---
 
 ## The Six Business Questions
 
-Both versions answer the same questions from a product inventory CSV:
-
-| # | Question |
-|---|---|
-| Q1 | What is the total retail value of current inventory? |
-| Q2 | Which products are at or below their reorder point? |
-| Q3 | Which 5 products have the highest profit margin? |
-| Q4 | Revenue and unit count broken down by category? |
-| Q5 | Which products have had no sale in the last 90 days? |
-| Q6 | Which products have stock more than 3× their reorder point? |
+| # | Question | Verified Result |
+|---|---|---|
+| Q1 | Total retail value of current inventory | **$36,957.26** |
+| Q2 | Products at or below reorder point | **6 products** |
+| Q3 | Top 5 products by profit margin | BP-015 at 72.2% |
+| Q4 | Revenue and units by category | 7 categories |
+| Q5 | No sale in the last 90 days | **4 products** |
+| Q6 | Stock more than 3× reorder point | **9 products** |
 
 ---
 
@@ -224,7 +235,7 @@ without touching a single line of `Inventory`.
 |---|---|---|
 | Files | 1 | 5 |
 | Logical lines | 101 | 353 |
-| 10k-row benchmark | 46 ms | 63 ms |
+| 1k-row benchmark | ~5 ms | ~5.4 ms |
 | Adding a new question | 1 file, ~3 min | 2 files, ~4 min |
 | Adding a product subtype | Extend every dict | Subclass `Product` |
 | Swap output format | Rewrite `print_report()` | Subclass `Report` |
@@ -233,13 +244,24 @@ Full analysis → [`retrospective.md`](./retrospective.md)
 
 ---
 
-## Running the Tests (manual assertions)
+## Running the Tests
 
 ```bash
+# Cross-version agreement
+python -c "
+import sys; sys.path.insert(0,'.')
+from inventory_oop import Inventory
+from lab2.inventory_analyzer import load_inventory, q1_total_inventory_value
+oop_total  = Inventory.from_csv('inventory.csv').q1_total_inventory_value()
+proc_total = q1_total_inventory_value(load_inventory('inventory.csv'))
+assert abs(oop_total - proc_total) < 0.01
+print(f'Both versions agree: \${oop_total:,.2f}  ✓')
+"
+
+# Full domain assertion suite
 python -c "
 import sys; sys.path.insert(0,'.')
 from inventory_oop import Inventory, PerishableProduct
-
 inv = Inventory.from_csv('inventory.csv')
 assert len(inv) == 20
 assert inv.get('ES-010').is_expired
@@ -252,6 +274,8 @@ assert len(inv.q6_overstock())      == 9
 print('All assertions passed ✓')
 "
 ```
+
+Expected: `All assertions passed ✓` — verified on Python 3.9.6, macOS.
 
 ---
 
